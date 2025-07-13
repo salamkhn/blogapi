@@ -1,16 +1,17 @@
 import mongoose from "mongoose";
 
-const viewsSchema=mongoose.Schema({
-  blogcontent:{
-    type:mongoose.Types.ObjectId,
-    ref:'content'
+const viewsSchema = mongoose.Schema(
+  {
+    blogcontent: {
+      type: mongoose.Types.ObjectId,
+      ref: "content",
+    },
+    views: {
+      type: Number,
+      required: [true, "views required"],
+    },
   },
-  view:{
-    type:[Number,'views are required']
-  },
+  { timestamps: true }
+);
 
-
-},{timestamps:true})
-
-
-const view=mongoose.model('view',viewsSchema)
+export const view = mongoose.model("view", viewsSchema);

@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 const categorySchema = mongoose.Schema(
   {
     name: {
-      type: [String, "catagory name is required"],
+      type: String,
+      required: [true, "name is required"],
       trim: true,
     },
   },
   { timestamps: true }
 );
 
-const category = mongoose.model("category", categorySchema);
+export const category = mongoose.model("category", categorySchema);

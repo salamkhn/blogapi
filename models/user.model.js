@@ -26,7 +26,6 @@ const userModel = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "name is required"],
-      lowercase: true,
       trim: true,
     },
   },

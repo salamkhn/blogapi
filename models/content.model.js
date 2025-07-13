@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const contentSchema = mongoose.Schema(
   {
@@ -14,29 +14,25 @@ const contentSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "view",
     },
-    category: {
+
+    profile: {
       type: mongoose.Types.ObjectId,
-      ref: "category",
+      ref: "profile",
     },
-    profile:{
-      type:mongoose.Types.ObjectId,
-      ref:'profile'
+    comment: {
+      type: mongoose.Types.ObjectId,
+      ref: "commnet",
     },
-    comment:{
-      type:mongoose.Types.ObjectId,
-      ref:'commnet'
-    },
-    views:{
-      type:mongoose.Types.ObjectId,
-      ref:'view'
-    },
+
     content: {
-      type: [String, "content is required"],
+      type: String,
+      required: [true, "content required"],
       trim: true,
     },
     tittle: {
-      type: [String, "tittle is required"],
-      trim: true,
+      type: String,
+      required: [true, "tittle is required"],
+      unique: [true, "please choose another tittle name"],
     },
     subtittle: {
       type: String,
@@ -46,4 +42,4 @@ const contentSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const content = Mongoose.model("content", contentSchema);
+export const contentdata = mongoose.model("contentdata", contentSchema);

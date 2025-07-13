@@ -6,6 +6,8 @@ import { userRouter } from "./routes/userRoutes/user.routes.js";
 import { categoryRouter } from "./routes/categoryRoute/category.routes.js";
 import { contentRouter } from "./routes/contentRoute/content.routes.js";
 import { profileRouter } from "./routes/profileRoute/profile.routes.js";
+import { commentRouter } from "./routes/commentRoute/commentRouter.js";
+import { viewsRouter } from "./routes/viewsRoute/views.router.js";
 dbCon();
 const app = express();
 
@@ -14,14 +16,20 @@ app.use(express.json());
 //userRoutes
 app.use("/api/users", userRouter);
 
-//contentRoutes
-app.use("/api/blog", contentRouter);
-
 // categoryRoutes
 app.use("/api/blog", categoryRouter);
 
+//contentRoutes
+app.use("/api/blog", contentRouter);
+
 // profileRoutes
 app.use("/api/blog", profileRouter);
+
+// commentRoutes
+app.use("/api/blog", commentRouter);
+
+// viewsRoutes
+app.use("/api/blog", viewsRouter);
 
 const port = 333;
 app.listen(port, () => {

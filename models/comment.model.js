@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
 
 const replySchema = mongoose.Schema({
-  content: {
-    type: [String, "content is required"],
-    trim: true,
+  replaycontent: {
+    type: String,
+    required: [true, "content is required"],
   },
-  likeCount: {
+  replylikeCount: {
     type: Number,
+    required: true,
   },
-  disLikeCount: {
+  replydislikeCount: {
     type: Number,
   },
 });
@@ -17,7 +18,7 @@ const commentsSchema = mongoose.Schema(
   {
     owner: {
       type: mongoose.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     blog: {
       type: mongoose.Types.ObjectId,
@@ -26,12 +27,12 @@ const commentsSchema = mongoose.Schema(
 
     content: {
       type: String,
-      trim: true,
     },
     likeCount: {
       type: Number,
+      required: true,
     },
-    disLike: {
+    dislikeCount: {
       type: Number,
     },
     reply: [replySchema],
@@ -39,4 +40,4 @@ const commentsSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const comment = mongoose.model("comment", commentsSchema);
+export const comment = mongoose.model("comment", commentsSchema);

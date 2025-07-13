@@ -1,6 +1,9 @@
 import Router from "express";
-import { RegisterUser } from "../../controller/userController/user.js";
-import { userLogin } from "../../controller/userController/userLogin.js";
+import {
+  RegisterUser,
+  userLogin,
+} from "../../controller/userController/user.js";
+
 export const userRouter = Router();
 
 // @purpose => Register-user

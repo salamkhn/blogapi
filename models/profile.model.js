@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 const profileSchema = mongoose.Schema(
   {
-    type: mongoose.Types.ObjectId,
-    ref: "user",
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "users",
+    },
     profilePicture: {
-      type: [String, "picture is required"],
+      type: String,
+      required: [true, "profilePicture is required"],
     },
     bio: {
       type: String,
@@ -16,4 +19,4 @@ const profileSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const profile = mongoose.model("profile", profileSchema);
+export const profile = mongoose.model("profile", profileSchema);
