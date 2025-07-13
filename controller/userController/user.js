@@ -1,17 +1,32 @@
-import { dbCon } from "../../dbCon/dbCon.js";
 import { user } from "../../models/user.model.js";
-// import { dbCon } from "../../dbCon/dbCon.js";
 import bcryptjs from "bcryptjs";
-// dbCon()
-// userController (Register)
+
+// Register user function
 export const RegisterUser = async (req, res) => {
   try {
     const { username, email, phone, country, password } = req.body;
 
-    // hashing data just before saving data in to database
-    const hashed_password = await bcryptjs.hash("userData", 10);
+    // validation
+    if (!username || !email || !phone || !country || !password) {
+      console.log("all field are required");
+      return res.status(400).json({
+        message: "all field required",
+      });
+    }
 
-    //inserting data in dbs based on usrModel
+    //exixting
+    const existing = await user.findOne({ email });
+    if (existing) {
+      return res.status(400).json({
+        message: "user already existed",
+        success: false,
+      });
+    }
+
+    // password hashing
+    const hashed_password = await bcryptjs.hash(password, 10);
+
+    //getting data
     const userData = new user({
       username,
       email,
@@ -20,16 +35,17 @@ export const RegisterUser = async (req, res) => {
       password: hashed_password,
     });
 
-    // saving to database
+    // save to database
     await userData.save();
 
-    return res.status(200).json({
-      message: "save to dbs successfully",
+    //success response
+    return res.status(201).json({
+      message: " Database created && save to dbs successfully",
       data: userData,
       success: true,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "error in userController catch",
       success: false,
     });

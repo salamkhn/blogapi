@@ -23,7 +23,7 @@ app.use("/api/blog", categoryRouter);
 // profileRoutes
 app.use("/api/blog", profileRouter);
 
-const port = process.env.PORT || 333;
+const port = 333;
 app.listen(port, () => {
   console.log(`server is listing at port ${port}`);
 });
