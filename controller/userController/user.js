@@ -1,5 +1,6 @@
 import { user } from "../../models/user.model.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // REGISTER USER FUNCTION
 export const RegisterUser = async (req, res) => {
@@ -67,12 +68,17 @@ export const userLogin = async (req, res) => {
 
   const exist = await user.findOne({ email });
 
+  // pracatice of jwt<<
+
+  // pracatice of jwt>>
+
   if (!exist) {
     return res.status(400).json({
       message: "user not found",
       success: false,
     });
   }
+
   console.log("exist-password :", exist.password);
   //Validation to dbs
   // const encryptedpassword = await user.findOne({ password });
@@ -95,9 +101,16 @@ export const userLogin = async (req, res) => {
     });
   }
 
-  //success
+  const token = jwt.sign({ userId: exist._id }, "!!!@@#", {
+    expiresIn: "1d",
+  });
+
+  console.log("token :", token);
+
+  //success response
   return res.status(200).json({
     message: "successfully login",
     success: true,
+    token,
   });
 };
