@@ -70,8 +70,6 @@ export const getprofilebyId = async (req, res) => {
 
     const exist = await profile.findById(id);
 
-    console.log("exist :", exist);
-
     //validation
     if (!exist) {
       return res.status(400).json({
@@ -98,7 +96,7 @@ export const getprofilebyId = async (req, res) => {
 export const updateprofilebyId = async (req, res) => {
   const { profilePicture, bio } = req.body;
   const id = req.params.id;
-  console.log("id :", id);
+
   try {
     const exist = await profile.findByIdAndUpdate(
       id,
@@ -115,7 +113,7 @@ export const updateprofilebyId = async (req, res) => {
       return res.status(400).json({
         message: "profile with this id is not found",
         success: false,
-        profile: exist,
+     
       });
     }
 
@@ -123,6 +121,7 @@ export const updateprofilebyId = async (req, res) => {
     return res.status(201).json({
       message: "profile updated successfully",
       success: true,
+         profile: exist,
     });
   } catch (err) {
     return res.status(500).json({
@@ -136,7 +135,7 @@ export const updateprofilebyId = async (req, res) => {
 export const deleteprofileId = async (req, res) => {
   const id = req.params.id;
 
-  console.log("id :", id);
+
 
   try {
     const deleted = await profile.findByIdAndDelete(id);

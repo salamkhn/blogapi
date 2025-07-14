@@ -7,10 +7,9 @@ import { categoryRouter } from "./routes/categoryRoute/category.routes.js";
 import { contentRouter } from "./routes/contentRoute/content.routes.js";
 import { profileRouter } from "./routes/profileRoute/profile.routes.js";
 import { commentRouter } from "./routes/commentRoute/commentRouter.js";
-import { viewsRouter } from "./routes/viewsRoute/views.router.js";
 dbCon();
-const app = express();
 
+const app = express();
 app.use(express.json());
 
 //userRoutes
@@ -28,9 +27,7 @@ app.use("/api/blog", profileRouter);
 // commentRoutes
 app.use("/api/blog", commentRouter);
 
-// viewsRoutes
-app.use("/api/blog", viewsRouter);
-
+//listining
 const port = 333;
 app.listen(port, () => {
   console.log(`server is listing at port ${port}`);

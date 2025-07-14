@@ -25,6 +25,7 @@ export const createContent = async (req, res) => {
     return res.status(200).json({
       message: "data is successfully saved to dbs",
       success: true,
+      content: contentDetail,
     });
   } catch (err) {
     // server error in catch
@@ -41,7 +42,7 @@ export const showallblogsContent = async (req, res) => {
   try {
     const allcontent = await contentdata.find({});
 
-    //if not any category present in dbs
+    //if not present
     if (!allcontent) {
       return res.status(400).json({
         message: "not any blogcontent present",
@@ -68,11 +69,8 @@ export const showallblogsContent = async (req, res) => {
 export const getcontentbyId = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log("id in get content by id :", id);
 
     const exist = await contentdata.findById(id);
-
-    console.log("exist :", exist);
 
     //validation
     if (!exist) {
@@ -115,7 +113,7 @@ export const updatecontentbyId = async (req, res) => {
     //validation
     if (!exist) {
       return res.status(400).json({
-        message: "content with this id is not found",
+        message: "content with this id  not found",
         success: false,
       });
     }
@@ -129,6 +127,7 @@ export const updatecontentbyId = async (req, res) => {
     return res.status(500).json({
       message: "internal server error (in updatecontentbyId))",
       error: err.message,
+      success: false,
     });
   }
 };
@@ -136,8 +135,6 @@ export const updatecontentbyId = async (req, res) => {
 // delete content by id
 export const deletecontentbyId = async (req, res) => {
   const id = req.params.id;
-
-  console.log("id :", id);
 
   try {
     const deleted = await contentdata.findByIdAndDelete(id);

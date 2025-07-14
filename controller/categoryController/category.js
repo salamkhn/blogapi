@@ -12,7 +12,6 @@ export const createCategory = async (req, res) => {
         success: false,
       });
     }
-    console.log("category: ", name);
 
     const exist = await category.findOne({ name });
 
@@ -45,7 +44,7 @@ export const showCategory = async (req, res) => {
   try {
     const allcateGory = await category.find({});
 
-    //if not any category present in dbs
+    //validation
     if (!allcateGory) {
       return res.status(400).json({
         message: "not any category present",
@@ -53,7 +52,7 @@ export const showCategory = async (req, res) => {
       });
     }
 
-    // if present show success response
+    // success response
     return res.status(200).json({
       message: "all category successfully loaded",
       allcateGory,
@@ -85,7 +84,7 @@ export const getCategorybyId = async (req, res) => {
 
     // success response if found
     return res.status(200).json({
-      message: "this product found with given id",
+      message: "this product found by given id",
       success: true,
       category: exist,
     });

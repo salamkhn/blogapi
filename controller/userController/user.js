@@ -9,9 +9,9 @@ export const RegisterUser = async (req, res) => {
 
     // validation
     if (!username || !email || !phone || !country || !password) {
-      console.log("all field are required");
       return res.status(400).json({
         message: "all field required",
+        success: false,
       });
     }
 
@@ -68,9 +68,7 @@ export const userLogin = async (req, res) => {
 
   const exist = await user.findOne({ email });
 
-  // pracatice of jwt<<
 
-  // pracatice of jwt>>
 
   if (!exist) {
     return res.status(400).json({
@@ -79,14 +77,11 @@ export const userLogin = async (req, res) => {
     });
   }
 
-  console.log("exist-password :", exist.password);
-  //Validation to dbs
-  // const encryptedpassword = await user.findOne({ password });
-  console.log("password :", password);
+ 
 
   const isMatching = await bcryptjs.compare(password.trim(), exist.password);
-  // console.log("encryptedpassword", encryptedpassword);
-  console.log("isMatching :", isMatching);
+
+
   if (!isMatching) {
     return res.status(400).json({
       message: "invalid credentials",

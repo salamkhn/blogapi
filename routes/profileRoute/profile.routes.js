@@ -9,27 +9,27 @@ import {
 
 export const profileRouter = Router();
 
-// @purpose =>profileDetail
+// @purpose =>createProfile
 // method =>post
-// endPoint => api/blog/profile
-profileRouter.post("/createprofile", createProfile);
+// endPoint => api/blog/profile/create
+profileRouter.post("/profile/create", createProfile);
 
-//@purpose => showallprofiles
+//@purpose => showallprofile
 //method =>get
-//end-point =>/api/blog/showallprofiledetails
-profileRouter.get("/showallprofiledetails", allprofilesdetails);
+//end-point =>/api/blog/profile/showallprofile
+profileRouter.get("/profile/showallprofile", allprofilesdetails);
 
 //purpose => get profile by id
 //method =>get
-//end-point => /api/blog/getprofilebyId
-profileRouter.get("/getprofilebyId/:id", getprofilebyId);
+//end-point => /api/blog/profile/getbyId/:id
+profileRouter.get("/profile/getbyId/:id", getprofilebyId);
 
 //purpose => update profile by id
 //method =>put
-//end-point => /api/blog/updateprofilebyId
-profileRouter.put("/updateprofilebyId/:id", updateprofilebyId);
+//end-point => /api/blog/profile/updatebyId/:id
+profileRouter.put("/profile/updatebyId/:id", updateprofilebyId);
 
 //purpose => delete profile by id
 //method =DELETE
-//end-point =>/api/blog/deleteprofilebyId
-profileRouter.delete("/deleteprofilebyId/:id", deleteprofileId);
+//end-point =>/api/blog/profile/deletebyId/:id
+profileRouter.delete("/profile/deletebyId/:id", deleteprofileId);

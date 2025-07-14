@@ -80,8 +80,6 @@ export const getcommentbyId = async (req, res) => {
 
     const exist = await comment.findById(id);
 
-    console.log("exist :", exist);
-
     //validation
     if (!exist) {
       return res.status(400).json({
@@ -106,32 +104,37 @@ export const getcommentbyId = async (req, res) => {
 
 //update profile by id
 export const updatecommentbyId = async (req, res) => {
-  const { content, likeCount, dislikeCount, reply } = req.body;
-
-  console.log("replay :", content);
-  console.log("dislikeCount :", dislikeCount);
-
-  const { replaycontent, replylikeCount, replydislikeCount } = reply[0];
-
-  const id = req.params.id;
-  console.log("id :", id);
   try {
-    const exist = await comment.findByIdAndUpdate(
-      id,
-      {
-        content,
-        likeCount,
-        dislikeCount,
-        replaycontent,
-        replylikeCount,
-        replydislikeCount,
-      },
-      {
-        new: true,
-      }
-    );
+    const { content, likeCount, dislikeCount, reply } = req.body;
 
-    console.log("exist :", exist);
+    let updatereply;
+
+    // checking if reply is array than destrusture
+    if (Array.isArray(reply) && reply.length > 0) {
+      const { replaycontent, replylikeCount, replydislikeCount } = reply[0];
+      updatereply = [
+        {
+          replaycontent,
+          replylikeCount,
+          replydislikeCount,
+        },
+      ];
+    }
+
+    const id = req.params.id;
+    const existing = await comment.findById(id);
+
+    // the usage of nullscollesion (if left equation is false than use right equation)
+    const updatedfield = {
+      content: content ?? existing.content,
+      likeCount: likeCount ?? existing.likeCount,
+      dislikeCount: dislikeCount ?? existing.dislikeCount,
+      reply: reply ?? existing.reply,
+    };
+
+    const exist = await comment.findByIdAndUpdate(id, updatedfield, {
+      new: true,
+    });
 
     //validation
     if (!exist) {
@@ -159,27 +162,27 @@ export const updatecommentbyId = async (req, res) => {
 export const deletecommentId = async (req, res) => {
   const id = req.params.id;
 
-  console.log("id :", id);
+
 
   try {
-    const deleted = await profile.findByIdAndDelete(id);
+    const deleted = await comment.findByIdAndDelete(id);
 
     //validation
     if (!deleted) {
       return res.status(400).json({
-        message: "profile not exist with this id",
+        message: "comment not exist with this id",
         success: false,
       });
     }
 
     //success response
     return res.status(200).json({
-      message: "content with this id deleted successfully",
+      message: "comment with this id deleted successfully",
       success: true,
     });
   } catch (err) {
     return res.status(500).json({
-      message: "internal server error in (deleteprofile)",
+      message: "internal server error in (deletecomment)",
       success: false,
       error: err.message,
     });
