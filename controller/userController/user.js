@@ -68,8 +68,6 @@ export const userLogin = async (req, res) => {
 
   const exist = await user.findOne({ email });
 
-
-
   if (!exist) {
     return res.status(400).json({
       message: "user not found",
@@ -77,10 +75,7 @@ export const userLogin = async (req, res) => {
     });
   }
 
- 
-
   const isMatching = await bcryptjs.compare(password.trim(), exist.password);
-
 
   if (!isMatching) {
     return res.status(400).json({
@@ -96,7 +91,7 @@ export const userLogin = async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ userId: exist._id }, "!!!@@#", {
+  const token = jwt.sign({ userId: exist._id }, process.env.Secrete_key, {
     expiresIn: "1d",
   });
 

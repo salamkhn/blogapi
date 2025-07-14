@@ -1,7 +1,12 @@
 import jwt from "jsonwebtoken";
 import { user } from "../models/user.model.js";
-const authentication = (req, res, next) => {
-  const token = req.header("Auth");
+export const isauthenticated = (req, res, next) => {
+  const token = req.header("auth");
+
+  console.log(
+    "token => hello salam kasa huu app ma token hu tumara auth sa :",
+    token
+  );
 
   if (!token) {
     return res.status(400).json({
@@ -11,11 +16,11 @@ const authentication = (req, res, next) => {
   }
 
   //verify jwt
-  const decoded = jwt.verify(token, "!!!@@#");
+  const decoded = jwt.verify(token, process.env.Secrete_key);
 
   const id = decoded.userId;
 
-  const User = user.findOne({ id });
+  let User = user.findOne({ id });
 
   if (!User) {
     return res.status(400).json({

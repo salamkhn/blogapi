@@ -7,6 +7,7 @@ import {
   showCategory,
   updateCategorybyId,
 } from "../../controller/categoryController/category.js";
+import { isauthenticated } from "../../Authentication/auth.js";
 
 export const categoryRouter = Router();
 
@@ -33,4 +34,4 @@ categoryRouter.put("/category/updatebyId/:id", updateCategorybyId);
 //purpose => update category by id
 //method =DELETE
 //end-point =>/api/blog/category/deletebyid/:id
-categoryRouter.delete("/category/deletebyid/:id", deleteCategorybyId);
+categoryRouter.delete("/category/deletebyid/:id",isauthenticated, deleteCategorybyId);
