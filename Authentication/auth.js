@@ -3,10 +3,7 @@ import { user } from "../models/user.model.js";
 export const isauthenticated = (req, res, next) => {
   const token = req.header("auth");
 
-  console.log(
-    "token => hello salam kasa huu app ma token hu tumara auth sa :",
-    token
-  );
+  console.log("token => token :", token);
 
   if (!token) {
     return res.status(400).json({
@@ -29,7 +26,7 @@ export const isauthenticated = (req, res, next) => {
     });
   }
 
-  User = req.user;
+  req.user = User;
 
   next();
 };

@@ -3,7 +3,7 @@ import { comment } from "../../models/comment.model.js";
 // create comment function
 export const createComment = async (req, res) => {
   // destructuring
-  const { content, likeCount, dislikeCount, reply } = req.body;
+  const { content, likeCount, dislikeCount, reply,owner,blog } = req.body;
 
   const { replaycontent, replylikeCount, replydislikeCount } = reply[0];
 
@@ -21,6 +21,8 @@ export const createComment = async (req, res) => {
       content,
       likeCount,
       dislikeCount,
+      blog,
+      owner:req.user,
       reply: [
         {
           replaycontent,
@@ -105,7 +107,7 @@ export const getcommentbyId = async (req, res) => {
 //update profile by id
 export const updatecommentbyId = async (req, res) => {
   try {
-    const { content, likeCount, dislikeCount, reply } = req.body;
+    const { content, likeCount, dislikeCount,owner,blog reply } = req.body;
 
     let updatereply;
 
@@ -130,6 +132,8 @@ export const updatecommentbyId = async (req, res) => {
       likeCount: likeCount ?? existing.likeCount,
       dislikeCount: dislikeCount ?? existing.dislikeCount,
       reply: reply ?? existing.reply,
+      blog:blog ?? existing.blog,
+      user:req.user
     };
 
     const exist = await comment.findByIdAndUpdate(id, updatedfield, {

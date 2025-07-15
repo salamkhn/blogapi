@@ -2,7 +2,7 @@ import { profile } from "../../models/profile.model.js";
 
 // create profile
 export const createProfile = async (req, res) => {
-  const { profilePicture, bio } = req.body;
+  const { profilePicture, bio, user } = req.body;
 
   try {
     // validation
@@ -17,6 +17,7 @@ export const createProfile = async (req, res) => {
     await profile.create({
       profilePicture,
       bio,
+      user: req.user,
     });
 
     //success response
@@ -94,13 +95,13 @@ export const getprofilebyId = async (req, res) => {
 
 //update profile by id
 export const updateprofilebyId = async (req, res) => {
-  const { profilePicture, bio } = req.body;
+  const { profilePicture, bio, user } = req.body;
   const id = req.params.id;
 
   try {
     const exist = await profile.findByIdAndUpdate(
       id,
-      { profilePicture, bio },
+      { profilePicture, bio, user: req.user },
       {
         new: true,
       }
@@ -113,7 +114,6 @@ export const updateprofilebyId = async (req, res) => {
       return res.status(400).json({
         message: "profile with this id is not found",
         success: false,
-     
       });
     }
 
@@ -121,7 +121,7 @@ export const updateprofilebyId = async (req, res) => {
     return res.status(201).json({
       message: "profile updated successfully",
       success: true,
-         profile: exist,
+      profile: exist,
     });
   } catch (err) {
     return res.status(500).json({
@@ -134,8 +134,6 @@ export const updateprofilebyId = async (req, res) => {
 // delete profile by id
 export const deleteprofileId = async (req, res) => {
   const id = req.params.id;
-
-
 
   try {
     const deleted = await profile.findByIdAndDelete(id);

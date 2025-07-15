@@ -10,10 +10,7 @@ const contentSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "category",
     },
-    views: {
-      type: mongoose.Types.ObjectId,
-      ref: "view",
-    },
+ 
 
     profile: {
       type: mongoose.Types.ObjectId,

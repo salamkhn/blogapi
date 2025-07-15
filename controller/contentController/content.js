@@ -1,7 +1,8 @@
 import { contentdata } from "../../models/content.model.js";
 // create content function
 export const createContent = async (req, res) => {
-  const { content, tittle, subtittle } = req.body;
+  const { content, tittle, subtittle, user, category, profile, comment } =
+    req.body;
 
   try {
     //validation
@@ -17,6 +18,10 @@ export const createContent = async (req, res) => {
       content,
       tittle,
       subtittle,
+      category,
+      profile,
+      comment,
+      user: req.user,
     });
 
     contentDetail.save();
@@ -96,13 +101,22 @@ export const getcontentbyId = async (req, res) => {
 
 //update content by id
 export const updatecontentbyId = async (req, res) => {
-  const { content, tittle, subtittle } = req.body;
+  const { content, tittle, subtittle, user, category, profile, comment } =
+    req.body;
   const id = req.params.id;
   console.log("id :", id);
   try {
     const exist = await contentdata.findByIdAndUpdate(
       id,
-      { content, tittle, subtittle },
+      {
+        content,
+        tittle,
+        subtittle,
+        category,
+        profile,
+        comment,
+        user: req.user,
+      },
       {
         new: true,
       }
